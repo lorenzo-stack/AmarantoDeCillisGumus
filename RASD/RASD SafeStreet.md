@@ -1,6 +1,6 @@
 # RASD SafeStreets
 
-### Table of Content
+### Table of Contents
 
 ## 1. Introduction
 
@@ -32,15 +32,17 @@ Here it follows a list of the identified goals of the S2B.
 
 - G8: Elaborate informations in order to build statistics.
 
-- G9: Be complaint to GDPR specifications.
+- G9: Be compliant to GDPR specifications.
 
 ** the system doesn't provide personal informations about physical users who reported violations and it cannot perform connections between license plates and who commited the infraction.
 
 ### 1.2 Scope
 
-SafeStreets is built for citizens and public institutions in order to make more secure the city. The S2B is thought in order to keep safe informations from users who report violations and  help municipality to check the city through a distributed network of reports. 
+The idea of SafeStreets is to improve the condition of the general mobility in the city exploiting a virtuous relationship of collaboration between citizens reporting violations and public authorities. The S2B is thought to guarantee the privacy of users who report violations and to help municipality to check the city through a distributed network of reports. 
 
-The S2B will give to the user the possibility to report traffic infractions providing pictures , license plate (mandatory in the picture but not as input) and informations (date and location) about the violation and its type, such as double parking or using reserved places for people with disabilities. The system will process the report in which the proposal can be either validated or not. People can also question the system in order to retrieve informations about streets safety.
+The S2B will give to the user the possibility to report traffic infractions providing pictures , license plate (mandatory in the picture but not as input) and informations (date and location) about the violation and its type, such as double parking or using reserved places for people with disabilities. The system will evaluate either to accept or to refuse reports, that must be compliant to the minimum acceptance requirements.Then,Safestreets will validate reports according to his internal logic.Both the acceptance and validation criteria will be explained in details further in the DD. People can also question dynamically the system in order to retrieve various kind of informations,like trends, based on the type of violation and other selectable parameters.//Of course, more information can be mined by public authorities that will be also able to visualize personal information about bla bla bla
+
+
 
 SafeStreets provides an interface to public authorities with which share data and  cross them with its own informations. The purpose it is to suggest reasonable solutions to each problem, such as adding barriers between streets and bike lane, adding stakes on the sidewalk due to an aggressive parking or suggesting more checks in areas where there are double parking or car parked in reserved places for people with disabilities.
 
@@ -61,6 +63,7 @@ SafeStreets provides an interface to public authorities with which share data an
 * **API** = Application Programming Interface
 
 * **UI** = User Interface
+* **DD** = Design Document
 
 ##### 1.3.3 Abbreviations
 
