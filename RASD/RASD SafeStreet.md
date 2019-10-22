@@ -1,6 +1,6 @@
 # RASD SafeStreets
 
-### Table of Content
+### Table of Contents
 
 ## 1. Introduction
 
