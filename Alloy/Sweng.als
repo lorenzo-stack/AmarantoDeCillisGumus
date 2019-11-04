@@ -99,7 +99,7 @@ no c: Citizen | c.status = Created and c.fiscalCode in Report.fiscalCode
 //in this part of the model we consider the part of the feedback concerned about the ticket being issued or not
 sig Feedback {
 violation: one Violation,
-authority: PoliceOffice
+madeBy: PoliceOffice
 }
 
 fact feedbackIssued {
@@ -108,7 +108,7 @@ no  f,f'' : Feedback | f != f'' and f.violation = f''.violation
 //no feedback with more than one violation
 no v,v': Violation, f : Feedback | v != v' and f.violation = v and f.violation = v'
 //no issued status without feedback 
-no v : Violation | v.ticketStatus = NotIssuedTicket and v in Feedback.violation
+no v : Violation | (v.ticketStatus = NotIssuedTicket and v in Feedback.violation) or ( v.ticketStatus = IssuedTicket and v not in Feedback.violation)
 }
 
 //statistics
@@ -130,13 +130,15 @@ pred showBasicService {
 #Citizen = 3
 }
 
-run showBasicService for 6
+//run showBasicService for 6
 
-pred show{
+pred advancedFunction2{
 //testing contrainsts
 //#Citizen = 2
-#Report >1
-#Violation > 1
+#Report = 5
+#Violation = 2
+#Feedback = 1
+#Citizen = 3
 }
 
-run show for 4
+run advancedFunction2 for 6
