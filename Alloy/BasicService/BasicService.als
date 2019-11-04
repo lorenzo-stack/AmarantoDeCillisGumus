@@ -50,24 +50,17 @@ fiscalCode: one FiscalCode,
 licensePlate: one LicensePlate,  //as we're testing the domain model, we assume that all the alg provides the license plate
 dataLocation: one DataAndLocation
 }
-
-abstract sig TicketStatus {}
-one sig IssuedTicket extends TicketStatus {}
-one sig NotIssuedTicket extends TicketStatus{}
-
 sig Violation {
 licensePlate: one LicensePlate,
 reports: set Report,
 dataLocation: one DataAndLocation, //not forcing to be equal to the ones of the reports because there can be bias in the data
-//attribute for support traffic ticket generation
-ticketStatus: one TicketStatus
 }
 
 //ofc a violation is effective when constraints are satisfied 
 fact AViolationExists{
 //all the reports associated in a violation have the license plate equal to the one in the violation
 all v : Violation |  v.reports.licensePlate = v.licensePlate and v.reports.dataLocation = v.dataLocation
-//a report is used only for a violation
+--a report is used only for a violation
 no r: Report, v: Violation, s: Violation | v != s and r in v.reports and r in s.reports
 //violation is created when we have at least 2 reports
 all v: Violation | #v.reports > 1
@@ -96,20 +89,6 @@ fact citizenMustBeActiveInOrderToReport {
 no c: Citizen | c.status = Created and c.fiscalCode in Report.fiscalCode
 }
 
-//in this part of the model we consider the part of the feedback concerned about the ticket being issued or not
-sig Feedback {
-violation: one Violation,
-authority: PoliceOffice
-}
-
-fact feedbackIssued {
-//no more than one feedback for violation
-no  f,f'' : Feedback | f != f'' and f.violation = f''.violation
-//no feedback with more than one violation
-no v,v': Violation, f : Feedback | v != v' and f.violation = v and f.violation = v'
-//no issued status without feedback 
-no v : Violation | v.ticketStatus = NotIssuedTicket and v in Feedback.violation
-}
 
 //statistics
 abstract sig Statistic {}
@@ -123,7 +102,7 @@ all u : User | u in EndUser.composedBy
 all u : PA | u in StatAdvanced.accessibility
 }
 
-//generate basic service world
+
 pred showBasicService {
 #Report = 4
 #Violation = 1
@@ -131,12 +110,3 @@ pred showBasicService {
 }
 
 run showBasicService for 6
-
-pred show{
-//testing contrainsts
-//#Citizen = 2
-#Report >1
-#Violation > 1
-}
-
-run show for 4
