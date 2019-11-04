@@ -32,7 +32,13 @@ status: one AccountStatus
 //fiscal code
 sig FiscalCode{}
 
-sig DataAndLocation {}
+sig DataAndLocation {
+location: one Location,
+date: one Date
+}
+sig Location {}
+sig Date {}
+
 
 sig LicensePlate {}
 
@@ -66,7 +72,8 @@ ticketStatus: one TicketStatus
 //ofc a violation is effective when constraints are satisfied 
 fact AViolationExists{
 //all the reports associated in a violation have the license plate equal to the one in the violation
-all v : Violation |  v.reports.licensePlate = v.licensePlate and v.reports.dataLocation = v.dataLocation
+
+
 //a report is used only for a violation
 no r: Report, v: Violation, s: Violation | v != s and r in v.reports and r in s.reports
 //violation is created when we have at least 2 reports
@@ -123,6 +130,27 @@ all u : User | u in EndUser.composedBy
 all u : PA | u in StatAdvanced.accessibility
 }
 
+//function2
+sig Suggestion {}
+sig TypeInfraction {}
+sig Incident {location: one Location, date : one Date}
+sig UnsafeArea {
+location : one Location,
+violations: set Violation,
+incidents:Incident
+}
+
+fact ss{ //non esiste ua la cui locazione non sia in nessuna violazione, una o due violazioni
+all ua : UnsafeArea| #ua.violations>1
+no ua, ua' : UnsafeArea | ua != ua' and ua.location = ua'.location
+all ua: UnsafeArea,  disj v,v' : Violation | v in ua.violations and v' in ua.violations and v.dataLocation =v'.dataLocation and v!=v'
+//all  ua : UnsafeArea, v,v' :ua.violations| v.dataLocation.location =v'.dataLocation.location and v!=v'
+//no ua : UnsafeArea | ua.location not in Violation.dataLocation.location
+//no ua : UnsafeArea | ua.location in Violation.dataLocation.location and #Violation.dataLocation.location = 1 and #Violation.dataLocation.location = 2
+//some ua : UnsafeArea | some location: Location | location = ua.location
+}
+
+
 //generate basic service world
 pred showBasicService {
 #Report = 4
@@ -141,4 +169,25 @@ pred advancedFunction2{
 #Citizen = 3
 }
 
-run advancedFunction2 for 6
+//run advancedFunction2 for 6
+
+pred test{
+#TypeInfraction = 0
+#Suggestion = 0
+
+#Violation =3
+#Report  =10
+#Feedback = 1
+#Location  =3
+#UnsafeArea >0
+}
+
+run test for 12
+
+
+
+
+
+
+
+
