@@ -103,8 +103,8 @@
 									"containerExtending": false,
 									"left": 0,
 									"top": 0,
-									"width": 721,
-									"height": 449,
+									"width": 593,
+									"height": 401,
 									"autoResize": false,
 									"nameLabel": {
 										"$ref": "AAAAAAFuOvPdrI92e2I="
@@ -284,7 +284,7 @@
 											"left": 166,
 											"top": 80,
 											"width": 1,
-											"height": 301,
+											"height": 305,
 											"autoResize": false
 										}
 									],
@@ -300,7 +300,7 @@
 									"left": 88,
 									"top": 40,
 									"width": 155.79541015625,
-									"height": 341,
+									"height": 345,
 									"autoResize": false,
 									"stereotypeDisplay": "none",
 									"showVisibility": true,
@@ -486,7 +486,7 @@
 											"left": 476,
 											"top": 80,
 											"width": 1,
-											"height": 289,
+											"height": 305,
 											"autoResize": false
 										}
 									],
@@ -502,7 +502,7 @@
 									"left": 400,
 									"top": 40,
 									"width": 152.21533203125,
-									"height": 329,
+									"height": 345,
 									"autoResize": false,
 									"stereotypeDisplay": "label",
 									"showVisibility": true,
@@ -1390,53 +1390,6 @@
 									},
 									"showProperty": true,
 									"showType": true
-								},
-								{
-									"_type": "UMLNoteView",
-									"_id": "AAAAAAFuO0m54oETDsk=",
-									"_parent": {
-										"$ref": "AAAAAAFuOvPdrI90u4g="
-									},
-									"visible": true,
-									"enabled": true,
-									"lineColor": "#000000",
-									"fillColor": "#ffffff",
-									"fontColor": "#000000",
-									"font": "Arial;13;0",
-									"showShadow": true,
-									"containerChangeable": false,
-									"containerExtending": false,
-									"left": 544,
-									"top": 312,
-									"width": 161,
-									"height": 65,
-									"autoResize": false,
-									"text": "Municipality is allowed to do a suggestion request only if it has the list of unsafe areas",
-									"wordWrap": true
-								},
-								{
-									"_type": "UMLNoteLinkView",
-									"_id": "AAAAAAFuO0s3rIEf894=",
-									"_parent": {
-										"$ref": "AAAAAAFuOvPdrI90u4g="
-									},
-									"visible": true,
-									"enabled": true,
-									"lineColor": "#000000",
-									"fillColor": "#ffffff",
-									"fontColor": "#000000",
-									"font": "Arial;13;0",
-									"showShadow": true,
-									"containerChangeable": false,
-									"containerExtending": false,
-									"head": {
-										"$ref": "AAAAAAFuOzmm/YBQwHk="
-									},
-									"tail": {
-										"$ref": "AAAAAAFuO0m54oETDsk="
-									},
-									"lineStyle": 1,
-									"points": "603:311;568:256;320:256"
 								},
 								{
 									"_type": "UMLCombinedFragmentView",
@@ -2677,9 +2630,9 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 290,
+											"left": 289,
 											"top": 119,
-											"width": 158.970703125,
+											"width": 161,
 											"height": 13,
 											"autoResize": false,
 											"alpha": -4.656891028985144,
@@ -2847,9 +2800,9 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 527,
+											"left": 526,
 											"top": 155,
-											"width": 123.56982421875,
+											"width": 125,
 											"height": 13,
 											"autoResize": false,
 											"alpha": 1.5843080159824081,
@@ -3767,11 +3720,11 @@
 															"containerExtending": false,
 															"left": 60,
 															"top": 414,
-															"width": 171.9580078125,
+															"width": 176.287109375,
 															"height": 13,
 															"autoResize": false,
 															"underline": false,
-															"text": "[ID and Password are correct]",
+															"text": "[FC and Password are correct]",
 															"horizontalAlignment": 2,
 															"verticalAlignment": 5,
 															"wordWrap": false
@@ -4267,7 +4220,7 @@
 									},
 									"visibility": "public",
 									"isReentrant": true,
-									"guard": "ID and Password are correct"
+									"guard": "FC and Password are correct"
 								},
 								{
 									"_type": "UMLInteractionOperand",
