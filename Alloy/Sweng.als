@@ -32,10 +32,6 @@ status: one AccountStatus
 //fiscal code
 sig FiscalCode{}
 
-sig DataAndLocation {
-location: one Location,
-date: one Date
-}
 sig Location {}
 sig Date {}
 
@@ -54,7 +50,8 @@ sig Report {
 status: one ReportStatus,
 fiscalCode: one FiscalCode,
 licensePlate: one LicensePlate,  //as we're testing the domain model, we assume that all the alg provides the license plate
-dataLocation: one DataAndLocation
+date : one Date,
+location: one Location
 }
 
 abstract sig TicketStatus {}
@@ -64,9 +61,11 @@ one sig NotIssuedTicket extends TicketStatus{}
 sig Violation {
 licensePlate: one LicensePlate,
 reports: set Report,
-dataLocation: one DataAndLocation, //not forcing to be equal to the ones of the reports because there can be bias in the data
+date : one Date,
+location: one Location, //not forcing to be equal to the ones of the reports because there can be bias in the data
 //attribute for support traffic ticket generation
-ticketStatus: one TicketStatus
+ticketStatus: one TicketStatus,
+type: one TypeInfraction
 }
 
 //ofc a violation is effective when constraints are satisfied 
@@ -82,21 +81,24 @@ all v: Violation | #v.reports > 1
 
 fact singleEvent{
 //data, position and license plate define an event. All reports of the same event are treated in the same way
-no r, r' : Report | r.dataLocation = r'.dataLocation and r.licensePlate = r'.licensePlate and r.status != r'.status and r=r'
-no r,r' : Report | r.dataLocation = r'.dataLocation and r.licensePlate = r'.licensePlate and r.fiscalCode = r'.fiscalCode and r != r'
+no r, r' : Report | r.date = r'.date and r.location = r'.location and r.licensePlate = r'.licensePlate and r.status != r'.status and r=r'
+no r,r' : Report | r.date = r'.date and r.location = r'.location and r.licensePlate = r'.licensePlate and r.fiscalCode = r'.fiscalCode and r != r'
 //do it also with events
 }
 
-fact noMoreThanOneReportInValidationé{
+fact noMoreThanOneReportInValidation{
 //I can have at most one report in validation. With at least two reports accepted, I can fix a violation and validate the reports
-no r : Report, r':(Report-r) | r.dataLocation = r'.dataLocation and r.licensePlate = r'.licensePlate and r.fiscalCode != r'.fiscalCode  and r.status=Accepted and r'.status=Accepted
+no r : Report, r':(Report-r) | r.date = r'.date and  r.location = r'.location and r.licensePlate = r'.licensePlate and r.fiscalCode != r'.fiscalCode  and r.status=Accepted and r'.status=Accepted
 }
 
 fact noFloatingEntitties{
 //each of these needs a parent. They cannot float in the model
-all d : DataAndLocation | d in Report.dataLocation
+all d : Date | d in Report.date
+all loc : Location | loc in Report.location
 all fc : FiscalCode | fc in Citizen.fiscalCode
 all lp : LicensePlate | lp in Report.licensePlate
+all tp:TypeInfraction| tp in Violation.type
+all sg:Suggestion| sg in TypeInfraction.suggestion
 }
 
 fact citizenMustBeActiveInOrderToReport {
@@ -132,22 +134,50 @@ all u : PA | u in StatAdvanced.accessibility
 
 //function2
 sig Suggestion {}
-sig TypeInfraction {}
-sig Incident {location: one Location, date : one Date}
+
+sig TypeInfraction {
+
+suggestion:Suggestion
+
+}
+
+
+//for each type of infraction there is only a suggestion
+fact differentInfractionsHaveDifferentSuggestions {
+
+no t,s:TypeInfraction | t!=s and s.suggestion = t.suggestion
+
+}
+
+
+sig Incident {
+location: one Location, 
+date : one Date}
+
 sig UnsafeArea {
 location : one Location,
 violations: set Violation,
-incidents:Incident
+incidents: set Incident
 }
 
-fact ss{ //non esiste ua la cui locazione non sia in nessuna violazione, una o due violazioni
-all ua : UnsafeArea| #ua.violations>1
+fact NoDuplicateIncidents{//rename
+// No duplicate Incidents
+no i1,i2: Incident | i1.location = i2.location and i1.date=i2.date and i1 != i2
+
+all un:UnsafeArea | #un.incidents > 1
+
+all ua: UnsafeArea, disj i1,i2 : ua.incidents | i1.location =i2.location and i1.location = ua.location
+
+}
+
+fact NoLocationInUnsafeAreaNotInViolation{ //(rename )non esiste ua la cui locazione non sia in nessuna violazione, una o due violazioni
+// To be an unsafe area, it must have 3 or more violations. 
+all ua : UnsafeArea| #ua.violations>1 
+// Given two different unsafe areas, they do not have the same location. For all the unsafe areas.
 no ua, ua' : UnsafeArea | ua != ua' and ua.location = ua'.location
-all ua: UnsafeArea,  disj v,v' : Violation | v in ua.violations and v' in ua.violations and v.dataLocation =v'.dataLocation and v!=v'
-//all  ua : UnsafeArea, v,v' :ua.violations| v.dataLocation.location =v'.dataLocation.location and v!=v'
-//no ua : UnsafeArea | ua.location not in Violation.dataLocation.location
-//no ua : UnsafeArea | ua.location in Violation.dataLocation.location and #Violation.dataLocation.location = 1 and #Violation.dataLocation.location = 2
-//some ua : UnsafeArea | some location: Location | location = ua.location
+// For all the violations associated with an unsafe area, the location is the same
+all ua: UnsafeArea, disj v,v' : ua.violations | v.location =v'.location and v.location = ua.location
+
 }
 
 
@@ -171,20 +201,18 @@ pred advancedFunction2{
 
 //run advancedFunction2 for 6
 
-pred test{
-#TypeInfraction = 0
-#Suggestion = 0
+
+//run advfun1
+pred advancedFunction1{
 
 #Violation =3
-#Report  =10
-#Feedback = 1
-#Location  =3
-#UnsafeArea >0
+#UnsafeArea = 1
+#Date=2
+#Incident = 2
+#Location = 2
 }
 
-run test for 12
-
-
+//run  advancedFunction1 for 8
 
 
 
