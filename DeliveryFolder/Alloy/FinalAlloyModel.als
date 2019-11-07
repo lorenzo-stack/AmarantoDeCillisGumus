@@ -1,4 +1,5 @@
-//Signatures
+//--------Signatures--------
+
 abstract sig AccountStatus{}
 
 one sig Active extends AccountStatus{}
@@ -6,6 +7,7 @@ one sig Active extends AccountStatus{}
 one sig Created extends AccountStatus{}
 
 //All the status for reports
+
 abstract sig ReportStatus {}
 
 one sig Accepted extends ReportStatus{}
@@ -15,11 +17,13 @@ one sig Refused extends ReportStatus{}
 one sig Validated extends ReportStatus{}
 
 //Actors
+
 abstract sig User {}
 
 abstract sig PA extends User {}
 
 //Used in order to collect all the Users for each kind of statistic
+
 one sig EndUser {composedBy: some User}
 
 one sig Municipality extends PA {}
@@ -35,6 +39,7 @@ sig Citizen extends User {
 }
 
 //Fiscal code
+
 sig FiscalCode{}
 
 sig Location {}
@@ -50,6 +55,7 @@ one sig IssuedTicket extends TicketStatus {}
 one sig NotIssuedTicket extends TicketStatus{}
 
 //One report is associated to one citizen through its fiscal code
+
 sig Report {
 
 	status: one ReportStatus,
@@ -80,6 +86,7 @@ sig Feedback {
 }
 
 //Statistics - Two types of statistics are defined in order to highlight the different level of visibility based on the role
+
 abstract sig Statistic {}
 
 one sig StatBase extends Statistic  {
@@ -95,6 +102,7 @@ one sig  StatAdvanced extends Statistic {
 }
 
 //Statistic that refers to advanced functionality 2
+
 one sig  TIStatistics extends Statistic {
 
 	accessibility: some PA
@@ -124,9 +132,10 @@ sig UnsafeArea {
 
 }
 
-//Facts
+//--------Facts--------
 
 //A report associated to a violation is validated
+
 fact AViolationContainsOnlyValidatedReport {
 	
 	all r: Report | r.status = Validated <=> r in Violation.reports
@@ -237,7 +246,7 @@ fact differentInfractionsHaveDifferentSuggestions {
 
 }
 
-//in order to reduce the graphic complexity, we reduced the threshold for establishing if an area is unsafe
+//In order to reduce the graphic complexity, we reduced the threshold for establishing if an area is unsafe
 fact NoDuplicateIncidents{
 	
 	no i1,i2: Incident | i1.location = i2.location and i1.date=i2.date and i1 != i2
@@ -260,8 +269,9 @@ fact NoLocationInUnsafeAreaNotInViolation{
 
 }
 
+//--------Assertions--------
 
-//there is no report that is not validated but there is already a violation
+//There is no report that is not validated but there is already a violation
 assert noSameReportForTheSameEvent {
 
 	no disj r1,r2 : Report | r1.location = r2.location and r1.date = r2.date and r1.licensePlate = r2.licensePlate  and r1.fiscalCode = r2.fiscalCode
@@ -304,8 +314,9 @@ check extractUnsafeAreas for 3
 check noInvalidStateCondition for 3
 check violationConsistency for 5
 
-//generate basic service world
-pred showBasicService {
+//Generate basic service world
+
+pred basicService {
 
 	#Report = 4
 	#Violation = 1
@@ -313,7 +324,7 @@ pred showBasicService {
 
 }
 
-
+//Generate Advanced Function2 world
 
 pred advancedFunction2{
 
@@ -324,7 +335,7 @@ pred advancedFunction2{
 
 }
 
-
+//Generate Advanced Function1// world
 
 pred advancedFunction1{
 
@@ -336,7 +347,7 @@ pred advancedFunction1{
 
 }
 
-run showBasicService for 6
+run   basicService for 6
 run  advancedFunction1 for 8
 run advancedFunction2 for 6
 
