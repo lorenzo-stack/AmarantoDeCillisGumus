@@ -337,9 +337,9 @@
 														"$ref": "AAAAAAFup2cKRJUHNY8="
 													},
 													"font": "Arial;13;0",
-													"left": 150,
+													"left": 149,
 													"top": 114,
-													"width": 112.75341796875,
+													"width": 115.63525390625,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -347,7 +347,7 @@
 														"$ref": "AAAAAAFup2cKRJUIV3E="
 													},
 													"edgePosition": 1,
-													"text": "1 : open application"
+													"text": "1 : Open application"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -1553,7 +1553,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFup1pjt5QwLsw="
 									},
-									"name": "open application",
+									"name": "Open application",
 									"source": {
 										"$ref": "AAAAAAFup2QqkJRxOjI="
 									},
