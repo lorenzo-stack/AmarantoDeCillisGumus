@@ -347,7 +347,7 @@
 														"$ref": "AAAAAAFup2cKRJUIV3E="
 													},
 													"edgePosition": 1,
-													"text": "1 : Open application"
+													"text": "1 : Enter application"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -1553,7 +1553,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFup1pjt5QwLsw="
 									},
-									"name": "Open application",
+									"name": "Enter application",
 									"source": {
 										"$ref": "AAAAAAFup2QqkJRxOjI="
 									},
